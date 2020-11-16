@@ -1,5 +1,5 @@
 import { tk as tasker } from "tasker-types";
-import { pageInfo } from "./OpenGraph";
+import { pageInfo, OpenGraphResponse } from "./OpenGraph";
 import { MessageInterface } from "./MessageInterface";
 
 const PROJECT_NAME = "tasker_sms_link";
@@ -23,7 +23,7 @@ async function main(): Promise<void> {
     }
 
     // get opengraph info for url
-    let info = await pageInfo(OPENGRAPH_API_KEY, urlFromSMS);
+    let info: OpenGraphResponse = await pageInfo(OPENGRAPH_API_KEY, urlFromSMS);
 
     // place notification info in return object, set create notification to true
     msg.createNotification = true;
