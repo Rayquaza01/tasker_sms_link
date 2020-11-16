@@ -1,0 +1,26 @@
+{
+  "name": "tasker_sms_link",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "clean": "mkdir -p dist && rm -rf dist/*",
+    "build:bundle": "parcel build src/index.ts",
+    "watch:bundle": "parcel watch src/index.ts --no-hmr --no-autoinstall"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Rayquaza01/tasker_sms_link.git"
+  },
+  "author": "Joe Jarvis",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Rayquaza01/tasker_sms_link/issues"
+  },
+  "homepage": "https://github.com/Rayquaza01/tasker_sms_link#readme",
+  "dependencies": {
+    "parcel-bundler": "^1.12.4",
+    "tasker-types": "^1.0.0",
+    "typescript": "^4.0.5"
+  }
+}
