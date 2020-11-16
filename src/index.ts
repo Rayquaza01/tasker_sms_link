@@ -1,4 +1,4 @@
-import { tk as tasker, tk } from "tasker-types";
+import { tk as tasker } from "tasker-types";
 import { pageInfo, OpenGraphResponse } from "./OpenGraph";
 import { MessageInterface } from "./MessageInterface";
 
