@@ -1,13 +1,25 @@
-import { tk as tasker } from "tasker-types";
+import { tk as tasker, tk } from "tasker-types";
 import { pageInfo, OpenGraphResponse } from "./OpenGraph";
 import { MessageInterface } from "./MessageInterface";
 
-const PROJECT_NAME = "tasker_sms_link";
-const OPENGRAPH_API_KEY = tasker.global("OPENGRAPHAPI");
+// this variable is predefined from tasker task
+// contains api key
+declare const opengraphapi: string;
+
+const PROJECT_NAME: string = "tasker_sms_link";
+
+/**
+ * Set message to tasker global variable and exit task
+ * @param msg Message to return
+ */
+function taskerReturn(msg: any): void {
+    let varName: string = (PROJECT_NAME + "_msg").toUpperCase();
+    tasker.setGlobal(varName, JSON.stringify(msg));
+    tasker.exit();
+}
 
 async function main(): Promise<void> {
     // variable name to store return value in
-    let varName: string = (PROJECT_NAME + "_msg").toUpperCase();
     let msg: MessageInterface = { createNotification: false };
 
     // get most recent sms
@@ -18,12 +30,11 @@ async function main(): Promise<void> {
     // if no url found
     if (typeof urlFromSMS === "undefined") {
         // return with create notification set to false
-        tasker.setGlobal(varName, JSON.stringify(msg));
-        tasker.exit();
+        taskerReturn(msg);
     }
 
     // get opengraph info for url
-    let info: OpenGraphResponse = await pageInfo(OPENGRAPH_API_KEY, urlFromSMS);
+    let info: OpenGraphResponse = await pageInfo(opengraphapi, urlFromSMS);
 
     // place notification info in return object, set create notification to true
     msg.createNotification = true;
@@ -31,8 +42,7 @@ async function main(): Promise<void> {
     msg.description = info.hybridGraph.description ?? "";
     msg.favicon = info.hybridGraph.favicon ?? "";
     msg.url = info.hybridGraph.url ?? "";
-    tasker.setGlobal(varName, JSON.stringify(msg));
-    tasker.exit();
+    taskerReturn(msg);
 }
 
 main();
